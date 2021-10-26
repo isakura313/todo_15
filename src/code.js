@@ -1,12 +1,7 @@
 const root = document.getElementById("root");
+import { createElement } from './createElement';
+import { drawTodos } from './drawTodos';
 
-function createElement(tag, content, className, parent, position) {
-  const el = document.createElement(tag);
-  el.innerText = content;
-  el.classList.add(className);
-  parent.insertAdjacentElement(position, el);
-  return el;
-}
 const main_columns = createElement("div", "", "columns", root, "afterbegin");
 main_columns.style.paddingTop = "2em";
 const column = createElement("div", "", "column", main_columns, "afterbegin");
@@ -21,8 +16,15 @@ btn.classList.add("is-primary");
 const ol = createElement("ol", "", "ol", column, "beforeend"); // обертка списка
 ol.style.margin = "1em 0 0 2em";
 ol.setAttribute("type", "a");
-const todo = [];
+let todo = [];
 let delete_btns = [];
+
+window.onload= () =>{
+  todo = JSON.parse(localStorage.getItem('todo'))
+  if(todo){
+    drawTodos(todo, ol, delete_btns)
+  }
+}
 
 btn.onclick = () => {
   addTodo();
@@ -49,33 +51,10 @@ function addTodo() {
     return;
   }
   todo.push(input.value);
+  localStorage.setItem("todo", JSON.stringify(todo))
   ol.innerHTML = "";
   input.value = "";
-  todo.map((item, index) => {
-    let li = createElement("li", item, "li", ol, "beforeend");
-    li.style.marginTop = "1em";
-    li.setAttribute("key", index);
-    let btn_delete = createElement(
-      "button",
-      "delete",
-      "button",
-      li,
-      "beforeend"
-    );
-    btn_delete.classList.add("is-danger");
-    btn_delete.classList.add("is-small");
-    btn_delete.style.marginLeft = "3em";
-    delete_btns = [];
-    delete_btns.push(btn_delete);
-    delete_btns.map((btn)=>{
-      btn.onclick = () =>{
-        const key = btn.parentNode.getAttribute("key");
-        todo.splice(key, 1);
-        btn.parentNode.remove()
-      }
-    })
-    
-  });
+  drawTodos(todo,ol, delete_btns);
 }
 
 
