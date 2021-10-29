@@ -19,8 +19,10 @@ ol.setAttribute("type", "a");
 let todo = [];
 let delete_btns = [];
 
-window.onload= () =>{
-  todo = JSON.parse(localStorage.getItem('todo'))
+window.onload = () =>{
+  if(localStorage.getItem("todo")){
+    todo = JSON.parse(localStorage.getItem('todo'))
+  }
   if(todo){
     drawTodos(todo, ol, delete_btns)
   }
