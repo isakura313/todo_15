@@ -14,6 +14,30 @@ class BasePlayer{
         this.hp = this.hp - damage
     }
 }
-const player = new BasePlayer("Steve", 100, 5)
-player.getDamage(10)
-console.log(player.hp)
+
+class Tank extends BasePlayer{
+    getShield(){
+        return "я не могу быть атакован"
+    }
+}
+let tank = new Tank('tank', 100, 20)
+console.log(tank.sayName())
+console.log(tank.getShield())
+
+
+
+
+
+
+
+
+// let obj = {
+//     name: "Ivan",
+//     surname: "Ivanov",
+//     sayName: function(){
+//         return `меня зовут ${this.name} ${this.surname}`
+//     }
+// }
+// let name = "Semen"
+// let surname = "Semenovich"
+// console.log(obj.sayName());
