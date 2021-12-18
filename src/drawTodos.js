@@ -19,7 +19,12 @@ export function drawTodos(todo, ol, delete_btns) {
     delete_btns.map((btn) => {
       btn.onclick = () => {
         const key = btn.parentNode.getAttribute("key");
-        todo.splice(key, 1); // TODO на метод filter
+        todo.splice(key, 1); // TODO на метод filter 
+        //  он 
+        if(todo.length == 1 ){
+          todo.length = 0
+          localStorage.setItem("todo", JSON.stringify(todo))
+        }
         localStorage.setItem("todo", JSON.stringify(todo))
         btn.parentNode.remove();
       };
